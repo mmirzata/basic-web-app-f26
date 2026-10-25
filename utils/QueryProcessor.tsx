@@ -19,5 +19,18 @@ export default function QueryProcessor(query: string): string {
     return "mmirzata"; 
   }
 
+  const largestMatch = query.match(
+    /which of the following numbers is the largest:\s*([\d,\s]+)/i
+  );
+  if (largestMatch) {
+    const numbers = largestMatch[1]
+      .split(",")
+      .map((value) => parseInt(value.trim(), 10))
+      .filter((value) => !Number.isNaN(value));
+    if (numbers.length > 0) {
+      return String(Math.max(...numbers));
+    }
+  }
+
   return "";
 }

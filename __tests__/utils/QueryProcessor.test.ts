@@ -31,4 +31,10 @@ describe("QueryProcessor", () => {
         const response: string = QueryProcessor(query);
         expect(response).toBe("mmirzata"); // ← same ID as above
       });
+
+    test("should return the largest number", () => {
+        const query = "Which of the following numbers is the largest: 93, 95, 89?";
+        const response: string = QueryProcessor(query);
+        expect(response).toBe("95");
+      });
 });
