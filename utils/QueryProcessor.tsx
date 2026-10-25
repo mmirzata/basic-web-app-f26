@@ -32,5 +32,41 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  const plusMatch = query.match(/what is (\d+(?: plus \d+)+)/i);
+  if (plusMatch) {
+    const sum = plusMatch[1]
+      .split(/ plus /i)
+      .reduce((total, value) => total + parseInt(value, 10), 0);
+    return String(sum);
+  }
+
+  const productMatch = query.match(/what is (\d+) multiplied by (\d+)/i);
+  if (productMatch) {
+    return String(parseInt(productMatch[1], 10) * parseInt(productMatch[2], 10));
+  }
+
+  const squareCubeMatch = query.match(
+    /which of the following numbers is both a square and a cube:\s*([\d,\s]+)/i
+  );
+  if (squareCubeMatch) {
+    const numbers = squareCubeMatch[1]
+      .split(",")
+      .map((value) => parseInt(value.trim(), 10))
+      .filter((value) => !Number.isNaN(value));
+    const match = numbers.find((value) => isSquareAndCube(value));
+    if (match !== undefined) {
+      return String(match);
+    }
+  }
+
   return "";
+}
+
+function isSquareAndCube(value: number): boolean {
+  const cubeRoot = Math.round(Math.cbrt(value));
+  if (cubeRoot * cubeRoot * cubeRoot !== value) {
+    return false;
+  }
+  const squareRoot = Math.round(Math.sqrt(cubeRoot));
+  return squareRoot * squareRoot === cubeRoot;
 }

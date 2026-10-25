@@ -32,9 +32,24 @@ describe("QueryProcessor", () => {
         expect(response).toBe("mmirzata"); // ← same ID as above
       });
 
-    test("should return the largest number", () => {
-        const query = "Which of the following numbers is the largest: 93, 95, 89?";
-        const response: string = QueryProcessor(query);
-        expect(response).toBe("95");
-      });
+    test.each([
+        ["Which of the following numbers is the largest: 93, 95, 89?", "95"],
+        ["Which of the following numbers is the largest: 65, 24, 9?", "65"],
+        ["Which of the following numbers is the largest: 61, 5, 17?", "61"],
+        ["Which of the following numbers is the largest: 81, 49, 71?", "81"],
+        ["Which of the following numbers is the largest: 1, 82, 79?", "82"],
+        ["Which of the following numbers is the largest: 57, 97, 69?", "97"],
+        ["Which of the following numbers is the largest: 47, 76, 71?", "76"],
+        ["Which of the following numbers is the largest: 42, 45, 51?", "51"],
+    ])("should return the largest number for %s", (query, expected) => {
+        expect(QueryProcessor(query)).toBe(expected);
+    });
+
+    test.each([
+        ["What is 82 plus 73?", "155"],
+        ["What is 33 plus 16?", "49"],
+        ["What is 82 plus 97?", "179"],
+    ])("should add numbers for %s", (query, expected) => {
+        expect(QueryProcessor(query)).toBe(expected);
+    });
 });
