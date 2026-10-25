@@ -64,7 +64,7 @@ export default function QueryProcessor(query: string): string {
   }
 
   const anagramMatch = query.match(
-    /which of the following is an anagram of ["']([^"']+)["']:\s*(.+)/i
+    /which of the following is an anagram of ["']?([a-z]+)["']?:\s*(.+)/i
   );
   if (anagramMatch) {
     const target = letters(anagramMatch[1]);
@@ -75,7 +75,7 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
-  const scrabbleMatch = query.match(/what is the english scrabble score of ([a-z]+)/i);
+  const scrabbleMatch = query.match(/what is the (?:english )?scrabble score of ([a-z]+)/i);
   if (scrabbleMatch) {
     const score = scrabbleMatch[1]
       .split("")
@@ -92,7 +92,7 @@ export default function QueryProcessor(query: string): string {
 
   const powerMatch = query.match(/what is (-?\d+) to the power of (\d+)/i);
   if (powerMatch) {
-    return (BigInt(powerMatch[1]) ** BigInt(powerMatch[2])).toString();
+    return integerPower(BigInt(powerMatch[1]), parseInt(powerMatch[2], 10));
   }
 
   const plusTimesMatch = query.match(
@@ -178,6 +178,14 @@ function isSquareAndCube(value: number): boolean {
 
 function letters(value: string): string {
   return value.toLowerCase().replace(/[^a-z]/g, "").split("").sort().join("");
+}
+
+function integerPower(base: bigint, exponent: number): string {
+  let result = BigInt(1);
+  for (let step = 0; step < exponent; step += 1) {
+    result *= base;
+  }
+  return result.toString();
 }
 
 function fibonacci(index: number): number {

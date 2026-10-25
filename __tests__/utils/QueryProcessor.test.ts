@@ -72,7 +72,17 @@ describe("QueryProcessor", () => {
         expect(QueryProcessor("What is the 6th number in the Fibonacci sequence?")).toBe("8");
         expect(QueryProcessor("Which of the following numbers is both a square and a cube: 16, 64, 25?")).toBe("64");
         expect(QueryProcessor("What is the english scrabble score of banana?")).toBe("8");
+        expect(QueryProcessor("What is the scrabble score of buzzword?")).toBe("32");
+        expect(QueryProcessor("What is the scrabble score of september?")).toBe("15");
         expect(QueryProcessor('Which of the following is an anagram of "listen": silent, stone, notes?')).toBe("silent");
+        expect(QueryProcessor("Which of the following is an anagram of dictionary: indicatory, incendiary, abdication, butterfly?")).toBe("indicatory");
+        expect(QueryProcessor("Which of the following is an anagram of admirer: married, dairy, random, forgot, border?")).toBe("married");
+        expect(QueryProcessor("Which of the following is an anagram of listen: silent, enlists, google, banana?")).toBe("silent");
+        expect(QueryProcessor("What is 37 multiplied by 40 plus 42?")).toBe("1522");
+        expect(QueryProcessor("What is 37 multiplied by 86 plus 72?")).toBe("3254");
+        expect(QueryProcessor("What is 11 plus 22 multiplied by 35?")).toBe("781");
+        expect(QueryProcessor("What is 1 plus 16 multiplied by 9?")).toBe("145");
+        expect(QueryProcessor("What is 9 to the power of 3?")).toBe("729");
         expect(QueryProcessor("which city is the Eiffel tower in")).toBe("Paris");
     });
 });
